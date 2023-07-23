@@ -1,0 +1,154 @@
+package assign5p;
+import java.util.*;
+class Pizza{
+	String pizzaname;
+	int price;
+	char pizzasize;
+}
+class Pizzaparlour{
+	Scanner sc=new Scanner(System.in);
+	int size,front,rear,total;
+	Pizza order_list[];
+	Pizzaparlour(int qsize){
+		front=total=rear=0;
+		size=qsize;
+		order_list=new Pizza[qsize];
+	}
+	
+	boolean isFull() {
+		if(rear==size) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	boolean isEmpty() {
+		if(front==rear) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	public void placeorder() {
+		total=0;
+		order_list=new Pizza[10];
+		if(isFull()==true) {
+			System.out.println("Queue is full at the moment. Kindly wait.");
+			return;
+		}
+		else {
+			System.out.println("MENU");
+			System.out.println("\nPizzaName\t\t\tSize\t\t\tPrice\t\t\t\n1. Margerita\t\t\tSmall\t\t\t100\n\t\t\tMedium\t\t\t200\n\t\t\tLarge\t\t\t300\n");
+			System.out.println("\nPizzaName\t\t\tSize\t\t\tPrice\t\t\t\n2. BBQ\t\t\tSmall\t\t\t100\n\t\t\tMedium\t\t\t200\n\t\t\tLarge\t\t\t300\n");
+			System.out.println("Enter number of pizzas you wish to order:");
+			int pn=sc.nextInt();
+			for(int i=1;i<=pn;i++) {
+				Pizza a1=new Pizza();
+				System.out.println("Enter pizza name:");
+				a1.pizzaname=sc.next();
+				if(a1.pizzaname.equalsIgnoreCase("margerita")) {
+					System.out.println("Enter size of pizza:");
+					a1.pizzasize=sc.next().charAt(0);
+					if((a1.pizzasize=='s')||(a1.pizzasize=='m')||(a1.pizzasize=='l')) {
+						if(a1.pizzasize=='s') {
+							a1.price=100;
+						}
+						else if(a1.pizzasize=='m') {
+							a1.price=200;
+						}
+						else if(a1.pizzasize=='l') {
+							a1.price=300;
+						}
+						order_list[rear++]=a1;
+					}
+					else {
+						System.out.println("The size entered isn't available.");
+					}
+				}
+				else if(a1.pizzaname.equalsIgnoreCase("BBQ")) {
+					System.out.println("Enter size of pizza:");
+					a1.pizzasize=sc.next().charAt(0);
+					if((a1.pizzasize=='s')||(a1.pizzasize=='m')||(a1.pizzasize=='l')) {
+						if(a1.pizzasize=='s') {
+							a1.price=100;
+						}
+						if(a1.pizzasize=='m') {
+							a1.price=200;
+						}
+						if(a1.pizzasize=='l') {
+							a1.price=300;
+						}
+						order_list[rear++]=a1;
+					}
+					else {
+						System.out.println("The size entered isn't available.");
+					}
+				}
+				else {
+					System.out.println("The pizza entered isn't available.");
+				}
+				total+=a1.price;
+				System.out.println("Total price:"+total);
+				System.out.println("Thank you! Your food will be delivered shortly");
+			}
+			
+		}
+		
+	
+		
+	}
+	public void deliverorder() {
+		if(isEmpty()==true) {
+			System.out.println("All items are delivered");
+		}
+		else {
+			for(int j=front;j<rear;j++) {
+				if(j==0) {
+					System.out.println("Delivered items are:");
+				}
+				System.out.printf("%d Pizza Name- %s\n Pizza Size- %c\n Pizza Price",j+1,order_list[j].pizzaname,order_list[j].pizzasize,order_list[j].price);
+				front++;
+			}
+			System.out.println("Total price: "+total);
+			total=0;
+		}
+		
+	}
+	public void display() {
+		for(int i=front;i<rear;i++) {
+			if(i==0) {
+				System.out.println("Items ordered are:");
+			}
+			System.out.printf("%d Pizza Name- %s\n Pizza Size- %c\n Pizza Price",i+1,order_list[i].pizzaname,order_list[i].pizzasize,order_list[i].price);
+			return;
+		}
+	}
+}
+public class Main{
+	public static void main(String args[]) {
+		Scanner sc=new Scanner(System.in);
+		Pizzaparlour p=new Pizzaparlour(50);
+		int x,choice;
+		do {
+			System.out.println("MENU");
+			System.out.println("1. Place order for pizza");
+			System.out.println("2. Deliver order of pizza");
+			System.out.println("Enter choice:");
+			choice=sc.nextInt();
+			switch(choice) {
+			case 1:
+				p.placeorder();
+				break;
+			case 2:
+				p.deliverorder();
+				break;
+			default:System.out.println("invalid choice");
+			}
+			System.out.println("Press 1 to continue and 0 to exit");
+			x=sc.nextInt();
+		}while(x==1);
+	}
+}
